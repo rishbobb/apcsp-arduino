@@ -1,0 +1,12 @@
+[Unit]
+Description=arduino server
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/apcsp-arduino/server
+ExecStart=/home/pi/.nvm/versions/node/v19.3.0/bin/node .
+User=pi
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
