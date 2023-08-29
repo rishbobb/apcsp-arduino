@@ -25,6 +25,11 @@ app.get("/flash", (req, res) => {
   execSync("../scripts/flash.sh");
 });
 
+app.get("/alive", (req, res)=>{
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({alive: true}))
+})
+
 app.listen(port, async () => {
   console.log(`listening on port ${port}`);
 });
