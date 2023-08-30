@@ -55,5 +55,5 @@ void loop() {
 void RGBcolor(int red, int green, int blue) {
     analogWrite(11, red);
     analogWrite(10, green);
-    analogWrite(9, blue)
+    analogWrite(9, blue);
 }
