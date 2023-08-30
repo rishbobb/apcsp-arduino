@@ -40,7 +40,7 @@ void loop() {
     } else if (counter == 2) {
         RGBcolor(27, 165, 207);
     } else if (counter == 3){
-        RGBcolor (150, 75, 29); I
+        RGBcolor (150, 75, 29);
     } else if(counter == 4){
         RGBcolor (122, 29, 150);
     } else if(counter == 5){
