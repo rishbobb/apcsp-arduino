@@ -24,6 +24,7 @@ void setup() {
 }
 
 void loop() {
+    delay(20);
     lcd.setCursor(0,0);
     lcd.print(counter);
     Serial.println(counter);
@@ -31,10 +32,10 @@ void loop() {
     buttonState = digitalRead(BUTTON_PIN);
     Serial.println(buttonState);
     if (buttonState == LOW) {
+        RGBcolor(0,0,0);
         counter++;
         lcd.clear();
     }
-
     if (counter == 0) {
         RGBcolor(0,0,0);
         lcd.setCursor(0,0);
