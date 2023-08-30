@@ -6,6 +6,12 @@ LiquidCrystal lcd(13,12,8,7,6,5);
 
 int counter = 0;
 
+void RGBcolor(int red, int green, int blue) {
+    analogWrite(11, red);
+    analogWrite(10, green);
+    analogWrite(9, blue);
+}
+
 void setup() {
     lcd.begin(16,2);
     lcd.clear();
@@ -26,7 +32,6 @@ void loop() {
     Serial.println(buttonState);
     if (buttonState == LOW) {
         counter++;
-        delay(200);
         lcd.clear();
     }
 
@@ -50,10 +55,4 @@ void loop() {
     } else {
         counter = 0;
     }
-}
-
-void RGBcolor(int red, int green, int blue) {
-    analogWrite(11, red);
-    analogWrite(10, green);
-    analogWrite(9, blue);
 }
