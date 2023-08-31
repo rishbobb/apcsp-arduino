@@ -96,4 +96,5 @@ void loop() {
     wirelessWrite();
     
     ticks++;
+    delay(1);
 }
