@@ -20,14 +20,14 @@ void initializeLCDPins() {
 }
 
 void printLCD(String text) {
-    lcd.clear()
+    lcd.clear();
     lcd.setCursor(0,0);
     lcd.print(text);
 }
 
 void wirelessWrite() {
     if (Serial.available() > 0) {
-        printLCD(Serial.readln())
+        printLCD(Serial.readStringUntil("\n"))
     }
 }
 
@@ -47,7 +47,7 @@ void setup() {
 
 void imrieRequirements() {
     if (digitalRead(BUTTON_PIN) == LOW) {
-        RGBcolor(0,0,0);
+        setColor(0,0,0);
         counter++;
     }
 
