@@ -89,7 +89,7 @@ void imrieRequirements() {
 }
 
 void loop() {
-    if (ticks % 20 == 0) {
+    if (ticks % 50 == 0) {
         imrieRequirements();
     }
 
