@@ -7,13 +7,10 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
-let arduino;
-try {
-  arduino = new SerialPort({
-    path: "/dev/ttyUSB0",
-    baudRate: 9600,
-  });
-} catch (e) {}
+const arduino = new SerialPort({
+  path: "/dev/ttyUSB0",
+  baudRate: 9600,
+});
 
 // allow cors
 app.use(function (req, res, next) {
@@ -27,7 +24,7 @@ app.use(function (req, res, next) {
 });
 
 // static html
-app.use(express.static("static"));
+app.use(express.static('static'))
 
 app.get("/update", (req, res) => {
   execSync("../scripts/update.sh");
