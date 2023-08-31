@@ -2,6 +2,8 @@
 
 #define BUTTON_PIN 3
 
+using namespace LiquidCrystal;
+
 LiquidCrystal lcd(13,12,8,7,6,5);
 
 int counter = 0;
