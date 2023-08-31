@@ -7,10 +7,10 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
-// const arduino = new SerialPort({
-//   path: "/dev/ttyUSB0",
-//   baudRate: 9600,
-// });
+const arduino = new SerialPort({
+  path: "/dev/ttyUSB0",
+  baudRate: 9600,
+});
 
 // allow cors
 app.use(function (req, res, next) {
