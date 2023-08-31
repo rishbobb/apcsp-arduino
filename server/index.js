@@ -23,6 +23,9 @@ app.use(function (req, res, next) {
   next();
 });
 
+// static html
+app.use(express.static('static'))
+
 app.get("/update", (req, res) => {
   execSync("../scripts/update.sh");
   res.setHeader("Content-Type", "application/json");
