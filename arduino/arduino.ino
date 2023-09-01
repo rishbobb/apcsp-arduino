@@ -60,9 +60,13 @@ void imrieRequirements() {
         setColor(0,0,0);
         counter++;
         asciiDemoVal++;
+
+        if (asciiDemoVal > 126) {
+            asciiDemoVal = 0;
+        }
     } 
 
-    printLCD(colors[counter] + " " + ASCIIToChar(asciiDemoVal));
+    printLCD(colors[counter] + " " + ASCIIToChar(asciiDemoVal), 1);
 
     switch(counter) {
         case 0:
