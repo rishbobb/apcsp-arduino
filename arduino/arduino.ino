@@ -29,7 +29,7 @@ void printLCD(String text, int line = 0) {
     if (line == 0) {
         lcd.clear();
     }
-    lcd.setCursor(line,0);
+    lcd.setCursor(0,line);
     lcd.print(text);
 }
 
