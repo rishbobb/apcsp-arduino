@@ -71,7 +71,6 @@ void imrieRequirements() {
     switch(counter) {
         case 0:
             setColor(0,0,0);
-            // printLCD("off")
             break;
         case 1:
             setColor(148, 0, 211);
