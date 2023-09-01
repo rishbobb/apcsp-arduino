@@ -3,7 +3,7 @@
 #define BUTTON_PIN 3
 
 LiquidCrystal lcd(13,12,8,7,6,5);
-String[] colors = {"off", "violet", "indigo", "blue", "green", "yellow", "orange", "red"};
+String colors[] = {"off", "violet", "indigo", "blue", "green", "yellow", "orange", "red"};
 
 int counter = 0;
 int ticks = 0;
