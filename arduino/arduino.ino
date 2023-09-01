@@ -28,7 +28,7 @@ void printLCD(String text) {
 void wirelessWrite() {
     if (Serial.available() > 0) {
         String line = Serial.readStringUntil("\n");
-        line.pop_back();
+        line.remove(line.length()-1)
         printLCD(line);
     }
 }
