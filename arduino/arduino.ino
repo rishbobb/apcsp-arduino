@@ -3,9 +3,15 @@
 #define BUTTON_PIN 3
 
 LiquidCrystal lcd(13,12,8,7,6,5);
+String[] colors = {"off", "violet", "indigo", "blue", "green", "yellow", "orange", "red"};
 
 int counter = 0;
 int ticks = 0;
+int asciiDemoVal = 33;
+
+char ASCIIToChar(byte ascii) {
+  return ascii + "\0";
+}
 
 void setColor(int red, int green, int blue) {
     analogWrite(11, red);
@@ -19,9 +25,11 @@ void initializeLCDPins() {
     pinMode(9, OUTPUT);
 }
 
-void printLCD(String text) {
-    lcd.clear();
-    lcd.setCursor(0,0);
+void printLCD(String text, int line = 0) {
+    if (line == 0) {
+        lcd.clear();
+    }
+    lcd.setCursor(line,0);
     lcd.print(text);
 }
 
@@ -51,9 +59,10 @@ void imrieRequirements() {
     if (digitalRead(BUTTON_PIN) == LOW) {
         setColor(0,0,0);
         counter++;
+        asciiDemoVal++;
     } 
 
-    // printLCD(counter)
+    printLCD(colors[counter] + " " + ASCIIToChar(asciiDemoVal));
 
     switch(counter) {
         case 0:
