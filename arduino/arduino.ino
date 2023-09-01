@@ -27,7 +27,9 @@ void printLCD(String text) {
 
 void wirelessWrite() {
     if (Serial.available() > 0) {
-        printLCD(Serial.readStringUntil("\n"));
+        String line = Serial.readStringUntil("\n");
+        line.pop_back();
+        printLCD(line);
     }
 }
 
@@ -49,42 +51,43 @@ void imrieRequirements() {
     if (digitalRead(BUTTON_PIN) == LOW) {
         setColor(0,0,0);
         counter++;
-    }
+        // printLCD(counter)
 
-    // printLCD(counter)
-
-    switch(counter) {
-        case 0:
-            setColor(0,0,0);
-            // printLCD("off")
-            break;
-        case 1:
-            setColor(148, 0, 211);
-            break;
-        case 2:
-            setColor(75, 0, 130);
-            break;
-        case 3:
-            setColor(0, 0, 255);
-            break;
-        case 4:
-            setColor(0, 255, 0);
-            break;
-        case 5:
-            setColor(255, 255, 0);
-            break;
-        case 6:
-            setColor(255, 127, 0);
-            break;
-        case 7:
-            setColor(255, 0 , 0);
-            break;
-        case 8:
-            counter = 0;
-            break;
-        default:
-            counter = 0;
-            break;
+        switch(counter) {
+            case 0:
+                setColor(0,0,0);
+                // printLCD("off")
+                break;
+            case 1:
+                setColor(148, 0, 211);
+                break;
+            case 2:
+                setColor(75, 0, 130);
+                break;
+            case 3:
+                setColor(0, 0, 255);
+                break;
+            case 4:
+                setColor(0, 255, 0);
+                break;
+            case 5:
+                setColor(255, 255, 0);
+                break;
+            case 6:
+                setColor(255, 127, 0);
+                break;
+            case 7:
+                setColor(255, 0 , 0);
+                break;
+            case 8:
+                counter = 0;
+                break;
+            default:
+                counter = 0;
+                break;
+        }
+    } else {
+        setColor(0,0,0);
     }
 }
 
