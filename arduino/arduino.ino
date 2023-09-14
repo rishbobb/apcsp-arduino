@@ -2,6 +2,7 @@
 #include "ArduinoJson.h"
 
 #define BUTTON_PIN 3
+#define SPEAKER 4
 
 LiquidCrystal lcd(13, 12, 8, 7, 6, 5);
 String colors[] = {"off", "violet", "indigo", "blue", "green", "yellow", "orange", "red"};
@@ -39,21 +40,46 @@ void printLCD(String text, int line = 0)
     lcd.print(text);
 }
 
-StaticJsonDocument<500> readJSON(String jsonString) {
+StaticJsonDocument<500> readJSON(String jsonString)
+{
     StaticJsonDocument<500> doc;
     DeserializationError error = deserializeJson(doc, jsonString);
     return doc;
 }
 
-void wirelessWrite()
+String getLineFromSerial()
 {
     if (Serial.available() > 0)
     {
         String line = Serial.readStringUntil("\n");
-        line.remove(line.length()-1);
-        StaticJsonDocument<500> doc = readJSON(line);
-        if (doc["type"]=="w") {
-            printLCD(doc["line"]);
+        line.remove(line.length() - 1);
+        return line;
+    }
+    else
+    {
+        return "null";
+    }
+}
+
+void wirelessWrite(StaticJsonDocument<500> doc)
+{
+    if (doc["type"] == "w")
+    {
+        printLCD(doc["line"]);
+    }
+}
+
+void wirelessSpeaker(StaticJsonDocument<500> doc)
+{
+    if (doc["type"] == "s")
+    {
+        if (doc["hz"] == 0)
+        {
+            noTone(SPEAKER);
+        }
+        else
+        {
+            tone(SPEAKER, doc{"hz"});
         }
     }
 }
@@ -67,6 +93,7 @@ void setup()
 
     Serial.begin(9600);
     pinMode(BUTTON_PIN, INPUT);
+    pinMode(SPEAKER, OUTPUT);
 
     while (!Serial)
     {
@@ -135,7 +162,13 @@ void loop()
         imrieRequirements();
     }
 
-    wirelessWrite();
+    String line = getLineFromSerial();
+    if (!(line == "null"))
+    {
+        StaticJsonDocument<500> doc = readJSON(line);
+        wirelessWrite(doc);
+        wirelessSpeaker(doc);
+    }
 
     ticks++;
     delay(1);

@@ -6,13 +6,22 @@
     <title>AP CSP Web Client</title>
   </head>
   <body>
-    <input id="input" type="text" />
-    <button id="btn">Send</button>
+    <div>
+      <input id="input" type="text" />
+      <button id="btn">Send Text</button>
+    </div>
+    <div>
+      <input id="inputs" type="text" />
+      <button id="btns">Send Sound</button>
+    </div>
   </body>
 
   <script>
     document.getElementById("btn").onclick = async () => {
       await fetch(`/text?text=${document.getElementById("input").value}`);
+    };
+    document.getElementById("btns").onclick = async () => {
+      await fetch(`/freq?hz=${document.getElementById("inputs").value}`);
     };
   </script>
 </html>
