@@ -52,7 +52,7 @@ void wirelessWrite()
         String line = Serial.readStringUntil("\n");
         line.remove(line.length()-1);
         StaticJsonDocument<200> doc = readJSON(line);
-        if (doc["type"]=="wwrite") {
+        if (doc["type"]=="w") {
             printLCD(doc["line"]);
         }
     }
