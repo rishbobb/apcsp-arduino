@@ -79,7 +79,7 @@ void wirelessSpeaker(StaticJsonDocument<500> doc)
         }
         else
         {
-            tone(SPEAKER, doc{"hz"});
+            tone(SPEAKER, doc["hz"]);
         }
     }
 }
