@@ -39,8 +39,8 @@ void printLCD(String text, int line = 0)
     lcd.print(text);
 }
 
-StaticJsonDocument<200> readJSON(String jsonString) {
-    StaticJsonDocument<200> doc;
+StaticJsonDocument<500> readJSON(String jsonString) {
+    StaticJsonDocument<500> doc;
     DeserializationError error = deserializeJson(doc, jsonString);
     return doc;
 }
@@ -51,7 +51,7 @@ void wirelessWrite()
     {
         String line = Serial.readStringUntil("\n");
         line.remove(line.length()-1);
-        StaticJsonDocument<200> doc = readJSON(line);
+        StaticJsonDocument<500> doc = readJSON(line);
         if (doc["type"]=="w") {
             printLCD(doc["line"]);
         }

@@ -40,7 +40,7 @@ app.get("/flash", (req, res) => {
 
 app.get("/text", (req, res) => {
   arduino.write(
-    `${JSON.stringify({ type: "wwrite", line: req.query.text })}\n`
+    `${JSON.stringify({ type: "w", line: req.query.text })}\n`
   );
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify({ success: true }));
