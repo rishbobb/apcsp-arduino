@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
 });
 
 // static html
-app.use(express.static('static'))
+app.use(express.static("static"));
 
 app.get("/update", (req, res) => {
   execSync("../scripts/update.sh");
@@ -39,7 +39,9 @@ app.get("/flash", (req, res) => {
 });
 
 app.get("/text", (req, res) => {
-  arduino.write(`${req.query.text}\n`);
+  arduino.write(
+    `${JSON.stringify({ type: "wwrite", line: req.query.text })}\n`
+  );
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify({ success: true }));
 });
