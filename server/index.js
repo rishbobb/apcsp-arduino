@@ -63,9 +63,9 @@ app.get("/music", (req, res) => {
   let samples = [];
   pcm.getPcmData(
     "temp/audio.mp3",
-    { stereo: true, sampleRate: 2000 },
+    { stereo: true, sampleRate: 20 },
     function (sample, channel) {
-      samples.push(sample * 10000);
+      samples.push(sample * 1000000);
     },
     async function (err, output) {
       // if (err) throw new Error(err);
@@ -73,7 +73,7 @@ app.get("/music", (req, res) => {
         arduino.write(
           `${JSON.stringify({ type: "s", hz: samples[i].toFixed(0) })}\n`
         );
-        await sleep(1000 / 2000);
+        await sleep(1000 / 20);
       }
       res.setHeader("Content-Type", "application/json");
       res.end(JSON.stringify({ success: true }));
