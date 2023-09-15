@@ -71,7 +71,10 @@ app.get("/music", (req, res) => {
       // if (err) throw new Error(err);
       for (let i = 0; i < samples.length; i++) {
         arduino.write(
-          `${JSON.stringify({ type: "s", hz: samples[i].toFixed(0) })}\n`
+          `${JSON.stringify({
+            type: "s",
+            hz: parseInt(`${samples[i].toFixed(0)}`),
+          })}\n`
         );
         await sleep(1000 / 20);
       }
