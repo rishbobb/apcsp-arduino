@@ -63,7 +63,7 @@ app.get("/music", (req, res) => {
   let samples = [];
   pcm.getPcmData(
     "temp/audio.mp3",
-    { stereo: true, sampleRate: 20 },
+    { stereo: true, sampleRate: 2 },
     function (sample, channel) {
       samples.push(sample * 1000000);
     },
@@ -76,7 +76,7 @@ app.get("/music", (req, res) => {
             hz: parseInt(`${samples[i].toFixed(0)}`),
           })}\n`
         );
-        await sleep(1000 / 20);
+        await sleep(1000 / 2);
       }
       res.setHeader("Content-Type", "application/json");
       res.end(JSON.stringify({ success: true }));
