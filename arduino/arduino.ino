@@ -157,6 +157,7 @@ void imrieRequirements(bool print = false)
 
 void loop()
 {
+    printLCD(ticks, 1);
     if (ticks % 50 == 0)
     {
         imrieRequirements();
