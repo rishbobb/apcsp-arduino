@@ -1,6 +1,7 @@
 import express from "express";
 import { execSync } from "child_process";
 import { SerialPort } from "serialport";
+import * as pcm from "pcm";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -50,6 +51,34 @@ app.get("/freq", (req, res) => {
   );
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify({ success: true }));
+});
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+app.get("/music", (req, res) => {
+  let samples = [];
+  pcm.getPcmData(
+    "temp/audio.mp3",
+    { stereo: true, sampleRate: 2000 },
+    function (sample, channel) {
+      samples.push(sample * 10000);
+    },
+    async function (err, output) {
+      // if (err) throw new Error(err);
+      for (let i = 0; i < samples.length; i++) {
+        arduino.write(
+          `${JSON.stringify({ type: "s", hz: samples[i].toFixed(0) })}\n`
+        );
+        await sleep(1000 / 2000);
+      }
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ success: true }));
+    }
+  );
 });
 
 app.get("/alive", (req, res) => {
