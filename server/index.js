@@ -40,7 +40,7 @@ app.get("/flash", (req, res) => {
 });
 
 app.get("/direction", (req, res) => {
-  arduino.write(req.query.direction);
+  arduino.write(`${req.query.direction}`);
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify({ success: true }));
 });
