@@ -6,22 +6,46 @@
     <title>AP CSP Web Client</title>
   </head>
   <body>
-    <div>
-      <input id="input" type="text" />
-      <button id="btn">Send Text</button>
-    </div>
-    <div>
-      <input id="inputs" type="text" />
-      <button id="btns">Send Sound</button>
+    <div style="justify-content: center">
+      <div>
+        <button id="none" style="display: none">&uarr;</button>
+        <button id="foward">&uarr;</button>
+      </div>
+      <div>
+        <button id="left">&larr;</button>
+        <button id="right">&rarr;</button>
+      </div>
+      <div>
+        <button id="none2" style="display: none">&uarr;</button>
+        <button id="backward">&darr;</button>
+      </div>
     </div>
   </body>
 
   <script>
-    document.getElementById("btn").onclick = async () => {
-      await fetch(`/text?text=${document.getElementById("input").value}`);
+    document.getElementById("forward").onpointerdown = async () => {
+      await fetch(`/direction?direction=forward`);
     };
-    document.getElementById("btns").onclick = async () => {
-      await fetch(`/freq?hz=${document.getElementById("inputs").value}`);
+    document.getElementById("forward").onpointerup = async () => {
+      await fetch(`/direction?direction=stop`);
+    };
+    document.getElementById("backward").onpointerdown = async () => {
+      await fetch(`/direction?direction=backward`);
+    };
+    document.getElementById("backward").onpointerup = async () => {
+      await fetch(`/direction?direction=stop`);
+    };
+    document.getElementById("left").onpointerdown = async () => {
+      await fetch(`/direction?direction=left`);
+    };
+    document.getElementById("left").onpointerup = async () => {
+      await fetch(`/direction?direction=stop`);
+    };
+    document.getElementById("right").onpointerdown = async () => {
+      await fetch(`/direction?direction=right`);
+    };
+    document.getElementById("right").onpointerup = async () => {
+      await fetch(`/direction?direction=stop`);
     };
   </script>
 </html>

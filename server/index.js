@@ -39,16 +39,8 @@ app.get("/flash", (req, res) => {
   res.end(JSON.stringify({ success: true }));
 });
 
-app.get("/text", (req, res) => {
-  arduino.write(`${JSON.stringify({ type: "w", line: req.query.text })}\n`);
-  res.setHeader("Content-Type", "application/json");
-  res.end(JSON.stringify({ success: true }));
-});
-
-app.get("/freq", (req, res) => {
-  arduino.write(
-    `${JSON.stringify({ type: "s", hz: parseInt(req.query.hz) })}\n`
-  );
+app.get("/direction", (req, res) => {
+  arduino.write(req.query.direction);
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify({ success: true }));
 });
@@ -58,28 +50,6 @@ function sleep(ms) {
     setTimeout(resolve, ms);
   });
 }
-
-app.get("/music", (req, res) => {
-  let samples = [];
-  pcm.getPcmData(
-    "temp/audio.mp3",
-    { stereo: true, sampleRate: 2000 },
-    function (sample, channel) {
-      samples.push(sample * 10000);
-    },
-    async function (err, output) {
-      // if (err) throw new Error(err);
-      for (let i = 0; i < samples.length; i++) {
-        arduino.write(
-          `${JSON.stringify({ type: "s", hz: samples[i].toFixed(0) })}\n`
-        );
-        await sleep(1000 / 2000);
-      }
-      res.setHeader("Content-Type", "application/json");
-      res.end(JSON.stringify({ success: true }));
-    }
-  );
-});
 
 app.get("/alive", (req, res) => {
   res.setHeader("Content-Type", "application/json");
