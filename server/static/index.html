@@ -36,29 +36,41 @@
   </body>
 
   <script>
+    async function connectToServer() {
+        const ws = new WebSocket('ws://raspberrypi:6969/ws');
+        while (!(ws.readyState === 1)) {
+
+        }
+        return ws
+    }
+    const ws = connectToServer()
     $(document).keydown(function (e) {
       if (e.which == 37) {
         $(".left").addClass("pressed");
         $(".lefttext").text("LEFT");
         $(".left").css("transform", "translate(0, 2px)");
-        fetch("/direction?direction=left");
+        // fetch("/direction?direction=left");
+        ws.send("left")
       } else if (e.which == 38) {
         $(".up").addClass("pressed");
         $(".uptext").text("UP");
         $(".left").css("transform", "translate(0, 2px)");
         $(".down").css("transform", "translate(0, 2px)");
         $(".right").css("transform", "translate(0, 2px)");
-        fetch("/direction?direction=forward");
+        // fetch("/direction?direction=forward");
+        ws.send("forward")
       } else if (e.which == 39) {
         $(".right").addClass("pressed");
         $(".righttext").text("RIGHT");
         $(".right").css("transform", "translate(0, 2px)");
-        fetch("/direction?direction=right");
+        // fetch("/direction?direction=right");
+        ws.send("right")
       } else if (e.which == 40) {
         $(".down").addClass("pressed");
         $(".downtext").text("DOWN");
         $(".down").css("transform", "translate(0, 2px)");
-        fetch("/direction?direction=backward");
+        // fetch("/direction?direction=backward");
+        ws.send("backward")
       } else if (e.which == 66) {
         $(".b").text("B");
       } else if (e.which == 65) {
@@ -71,24 +83,28 @@
         $(".left").removeClass("pressed");
         $(".lefttext").text("");
         $(".left").css("transform", "translate(0, 0)");
-        fetch("/direction?direction=stop");
+        // fetch("/direction?direction=stop");
+        ws.send("stop")
       } else if (e.which == 38) {
         $(".up").removeClass("pressed");
         $(".uptext").text("");
         $(".left").css("transform", "translate(0, 0)");
         $(".down").css("transform", "translate(0, 0)");
         $(".right").css("transform", "translate(0, 0)");
-        fetch("/direction?direction=stop");
+        // fetch("/direction?direction=stop");
+        ws.send("stop")
       } else if (e.which == 39) {
         $(".right").removeClass("pressed");
         $(".righttext").text("");
         $(".right").css("transform", "translate(0, 0)");
-        fetch("/direction?direction=stop");
+        // fetch("/direction?direction=stop");
+        ws.send("stop")
       } else if (e.which == 40) {
         $(".down").removeClass("pressed");
         $(".downtext").text("");
         $(".down").css("transform", "translate(0, 0)");
-        fetch("/direction?direction=stop");
+        // fetch("/direction?direction=stop");
+        ws.send("stop")
       } else if (e.which == 66) {
         $(".b").text("");
       } else if (e.which == 65) {
@@ -99,25 +115,29 @@
     $(".left").mousedown(function () {
       $(".lefttext").text("LEFT");
       $(".left").css("transform", "translate(0, 2px)");
-      fetch("/direction?direction=left");
+      // fetch("/direction?direction=left");
+      ws.send("left")
     });
 
     $(".left").mouseup(function () {
       $(".lefttext").text("");
       $(".left").css("transform", "translate(0, 0)");
-      fetch("/direction?direction=stop");
+      // fetch("/direction?direction=stop");
+      ws.send("stop")
     });
 
     $(".right").mousedown(function () {
       $(".righttext").text("RIGHT");
       $(".right").css("transform", "translate(0, 2px)");
-      fetch("/direction?direction=right");
+      // fetch("/direction?direction=right");
+      ws.send("right")
     });
 
     $(".right").mouseup(function () {
       $(".righttext").text("");
       $(".right").css("transform", "translate(0, 0)");
-      fetch("/direction?direction=stop");
+      // fetch("/direction?direction=stop");
+      ws.send("stop")
     });
 
     $(".up").mousedown(function () {
@@ -125,7 +145,8 @@
       $(".left").css("transform", "translate(0, 2px)");
       $(".down").css("transform", "translate(0, 2px)");
       $(".right").css("transform", "translate(0, 2px)");
-      fetch("/direction?direction=forward");
+      // fetch("/direction?direction=forward");
+      ws.send("forward")
     });
 
     $(".up").mouseup(function () {
@@ -133,19 +154,22 @@
       $(".left").css("transform", "translate(0, 0)");
       $(".down").css("transform", "translate(0, 0)");
       $(".right").css("transform", "translate(0, 0)");
-      fetch("/direction?direction=stop");
+      // fetch("/direction?direction=stop");
+      ws.send("stop")
     });
 
     $(".down").mousedown(function () {
       $(".downtext").text("DOWN");
       $(".down").css("transform", "translate(0, 2px)");
-      fetch("/direction?direction=backward");
+      // fetch("/direction?direction=backward");
+      ws.send("backward")
     });
 
     $(".down").mouseup(function () {
       $(".downtext").text("");
       $(".down").css("transform", "translate(0, 0)");
-      fetch("/direction?direction=stop");
+      // fetch("/direction?direction=stop");
+      ws.send("stop")
     });
 
     /*

@@ -4,10 +4,12 @@ import { SerialPort } from "serialport";
 import * as pcm from "pcm";
 import * as dotenv from "dotenv";
 import { createInterface } from "readline";
+import { WebSocket } from "ws";
 dotenv.config();
 
 const app = express();
 const port = 3000;
+const wss = new WebSocket.Server({ port: 6969 });
 
 const arduino = new SerialPort({
   path: "/dev/ttyUSB0",
@@ -15,11 +17,18 @@ const arduino = new SerialPort({
 });
 
 var lineReader = createInterface({
-  input: arduino
+  input: arduino,
 });
 
-lineReader.on('line', function (line) {
+lineReader.on("line", function (line) {
   console.log(line);
+});
+
+wss.on("connection", (ws) => {
+  ws.on("message", (data) => {
+    console.log(`Got direction ${data} from ws`);
+    arduino.write(`${data}\n`);
+  });
 });
 
 // allow cors
@@ -49,7 +58,7 @@ app.get("/flash", (req, res) => {
 });
 
 app.get("/direction", (req, res) => {
-  console.log(`Got direction ${req.query.direction}`)
+  console.log(`Got direction ${req.query.direction}`);
   arduino.write(`${req.query.direction}\n`);
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify({ success: true, direction: req.query.direction }));
