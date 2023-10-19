@@ -3,6 +3,7 @@ import { execSync } from "child_process";
 import { SerialPort } from "serialport";
 import * as pcm from "pcm";
 import * as dotenv from "dotenv";
+import { createInterface } from "readline";
 dotenv.config();
 
 const app = express();
@@ -13,9 +14,13 @@ const arduino = new SerialPort({
   baudRate: 9600,
 });
 
-arduino.on('readable', function () {
-  console.log('Data:', arduino.read())
-})
+var lineReader = createInterface({
+  input: arduino
+});
+
+lineReader.on('line', function (line) {
+  console.log(line);
+});
 
 // allow cors
 app.use(function (req, res, next) {
