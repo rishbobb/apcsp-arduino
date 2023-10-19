@@ -8,25 +8,25 @@
     <!-- <script src="script.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
-  <body>
-    <div class="keys" class="prevent-select">
-      <div class="up arr"><i class="fa fa-arrow-up"></i></div>
+  <body class="noselect">
+    <div class="keys" class="noselect">
+      <div class="up arr noselect"><i class="fa fa-arrow-up noselect"></i></div>
       <br />
-      <div class="left arr"><i class="fa fa-arrow-left"></i></div>
-      <div class="down arr"><i class="fa fa-arrow-down"></i></div>
-      <div class="right arr"><i class="fa fa-arrow-right"></i></div>
+      <div class="left arr noselect"><i class="fa fa-arrow-left noselect"></i></div>
+      <div class="down arr noselect"><i class="fa fa-arrow-down noselect"></i></div>
+      <div class="right arr noselect"><i class="fa fa-arrow-right noselect"></i></div>
     </div>
     <br />
     <br />
     <br />
     <br />
-    <div class="names">
-      <div class="uptext"></div>
-      <div class="downtext"></div>
-      <div class="lefttext"></div>
-      <div class="righttext"></div>
-      <div class="b"></div>
-      <div class="a"></div>
+    <div class="names noselect">
+      <div class="uptext noselect"></div>
+      <div class="downtext noselect"></div>
+      <div class="lefttext noselect"></div>
+      <div class="righttext noselect"></div>
+      <div class="b noselect"></div>
+      <div class="a noselect"></div>
     </div>
 
     <link
@@ -36,10 +36,10 @@
   </body>
 
   <script>
-    const ws = new WebSocket('ws://raspberrypi:6969');
+    const ws = new WebSocket("ws://raspberrypi:6969");
     function send(data) {
       if (ws.readyState === 1) {
-        ws.send(data)
+        ws.send(data);
       }
     }
     $(document).keydown(function (e) {
@@ -48,7 +48,7 @@
         $(".lefttext").text("LEFT");
         $(".left").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=left");
-        send("left")
+        send("left");
       } else if (e.which == 38) {
         $(".up").addClass("pressed");
         $(".uptext").text("UP");
@@ -56,19 +56,19 @@
         $(".down").css("transform", "translate(0, 2px)");
         $(".right").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=forward");
-        send("forward")
+        send("forward");
       } else if (e.which == 39) {
         $(".right").addClass("pressed");
         $(".righttext").text("RIGHT");
         $(".right").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=right");
-        send("right")
+        send("right");
       } else if (e.which == 40) {
         $(".down").addClass("pressed");
         $(".downtext").text("DOWN");
         $(".down").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=backward");
-        send("backward")
+        send("backward");
       } else if (e.which == 66) {
         $(".b").text("B");
       } else if (e.which == 65) {
@@ -82,7 +82,7 @@
         $(".lefttext").text("");
         $(".left").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("stop")
+        send("stop");
       } else if (e.which == 38) {
         $(".up").removeClass("pressed");
         $(".uptext").text("");
@@ -90,19 +90,19 @@
         $(".down").css("transform", "translate(0, 0)");
         $(".right").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("stop")
+        send("stop");
       } else if (e.which == 39) {
         $(".right").removeClass("pressed");
         $(".righttext").text("");
         $(".right").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("stop")
+        send("stop");
       } else if (e.which == 40) {
         $(".down").removeClass("pressed");
         $(".downtext").text("");
         $(".down").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("stop")
+        send("stop");
       } else if (e.which == 66) {
         $(".b").text("");
       } else if (e.which == 65) {
@@ -114,28 +114,28 @@
       $(".lefttext").text("LEFT");
       $(".left").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=left");
-      send("left")
+      send("left");
     });
 
     $(".left").mouseup(function () {
       $(".lefttext").text("");
       $(".left").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("stop")
+      send("stop");
     });
 
     $(".right").mousedown(function () {
       $(".righttext").text("RIGHT");
       $(".right").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=right");
-      send("right")
+      send("right");
     });
 
     $(".right").mouseup(function () {
       $(".righttext").text("");
       $(".right").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("stop")
+      send("stop");
     });
 
     $(".up").mousedown(function () {
@@ -144,7 +144,7 @@
       $(".down").css("transform", "translate(0, 2px)");
       $(".right").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=forward");
-      send("forward")
+      send("forward");
     });
 
     $(".up").mouseup(function () {
@@ -153,21 +153,21 @@
       $(".down").css("transform", "translate(0, 0)");
       $(".right").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("stop")
+      send("stop");
     });
 
     $(".down").mousedown(function () {
       $(".downtext").text("DOWN");
       $(".down").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=backward");
-      send("backward")
+      send("backward");
     });
 
     $(".down").mouseup(function () {
       $(".downtext").text("");
       $(".down").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("stop")
+      send("stop");
     });
 
     /*
@@ -430,5 +430,14 @@
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+  }
+  .noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
   }
 </style>
