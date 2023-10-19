@@ -109,27 +109,9 @@ void setup()
 
 void loop()
 {
-    // get distance in float val
-    //   float distance = getDistance();
-
-    // if there is an object near
-    //   if (distance < 35) {
-    //     // turn on backup LED
-    //     digitalWrite(LED, HIGH);
-    //     // TURN cause backing up just puts the bot into a loop
-    //     right.move(0);
-    //     left.move(-250);
-    //     delay(1000);
-    //   } else {
-    //     // Normally keep LED off
-    //     digitalWrite(LED, LOW);
-    //     // move forward (vals are different because of small issue with wheels turning at diff speeds)
-    //     right.move(250);
-    //     left.move(250);
-    //     delay(1000);
-    //   }
     String line = getLineFromSerial();
     if (!(line == "null")) {
+        digitalWrite(LED, HIGH);
         if (line == "forward")
         {
             left.move(150);
@@ -154,5 +136,7 @@ void loop()
             left.move(0);
             right.move(0);
         }
+    } else {
+        digitalWrite(LED, LOW);
     }
 }
