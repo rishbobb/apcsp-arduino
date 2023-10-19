@@ -115,23 +115,23 @@ void loop()
         digitalWrite(LED, HIGH);
         if (line == "forward")
         {
-            left.move(150);
-            right.move(150);
+            left.move(255);
+            right.move(255);
         }
         else if (line == "backward")
         {
-            left.move(-150);
-            right.move(-150);
+            left.move(-255);
+            right.move(-255);
         }
         else if (line == "left")
         {
-            left.move(-150);
-            right.move(150);
+            left.move(-255);
+            right.move(255);
         }
         else if (line == "right")
         {
-            left.move(150);
-            right.move(-150);
+            left.move(255);
+            right.move(-255);
         }
         else if (line == "stop") {
             left.move(0);
