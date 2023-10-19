@@ -14,7 +14,7 @@ const arduino = new SerialPort({
 });
 
 arduino.on('readable', function () {
-  console.log('Data:', port.read())
+  console.log('Data:', arduino.read())
 })
 
 // allow cors
