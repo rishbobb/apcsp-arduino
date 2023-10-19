@@ -4,12 +4,12 @@ import { SerialPort } from "serialport";
 import * as pcm from "pcm";
 import * as dotenv from "dotenv";
 import { createInterface } from "readline";
-import { WebSocket } from "ws";
+import { WebSocketServer } from "ws";
 dotenv.config();
 
 const app = express();
 const port = 3000;
-const wss = new WebSocket.Server({ port: 6969 });
+const wss = new WebSocketServer({ port: 6969 });
 
 const arduino = new SerialPort({
   path: "/dev/ttyUSB0",
