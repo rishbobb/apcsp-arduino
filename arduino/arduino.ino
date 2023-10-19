@@ -18,6 +18,7 @@ String getLineFromSerial()
     {
         String line = Serial.readStringUntil("\n");
         line.remove(line.length() - 1);
+        Serial.println(line);
         return line;
     }
     else

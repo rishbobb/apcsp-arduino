@@ -13,6 +13,10 @@ const arduino = new SerialPort({
   baudRate: 9600,
 });
 
+arduino.on('readable', function () {
+  console.log('Data:', port.read())
+})
+
 // allow cors
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
