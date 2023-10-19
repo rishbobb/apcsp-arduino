@@ -37,7 +37,7 @@
 
   <script>
     async function connectToServer() {
-        const ws = new WebSocket('ws://raspberrypi:6969/ws');
+        const ws = new WebSocket('ws://raspberrypi:6969');
         while (!(ws.readyState === 1)) {
 
         }
