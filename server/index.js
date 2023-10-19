@@ -11,7 +11,7 @@ const port = 3000;
 
 const arduino = new SerialPort({
   path: "/dev/ttyUSB0",
-  baudRate: 9600,
+  baudRate: 1000000,
 });
 
 var lineReader = createInterface({
