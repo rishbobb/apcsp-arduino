@@ -8,9 +8,10 @@ html {
 .keys {
   font-family: 'Lato', sans-serif;    
   text-align: center;
-  width: 500px;
+  width: 400px;
   height: 200px;
   margin: auto;
+  margin-top: 200px;
 }
 
 .arr {
