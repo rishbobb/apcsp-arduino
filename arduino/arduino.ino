@@ -23,7 +23,7 @@ String getLineFromSerial()
     }
     else
     {
-        return "null";
+        return "n";
     }
 }
 
@@ -111,24 +111,24 @@ void setup()
 void loop()
 {
     String line = getLineFromSerial();
-    if (!(line == "null")) {
+    if (!(line == "n")) {
         digitalWrite(LED, HIGH);
-        if (line == "forward")
+        if (line == "f")
         {
             left.move(255);
             right.move(255);
         }
-        else if (line == "backward")
+        else if (line == "b")
         {
             left.move(-255);
             right.move(-255);
         }
-        else if (line == "left")
+        else if (line == "l")
         {
             left.move(-255);
             right.move(255);
         }
-        else if (line == "right")
+        else if (line == "r")
         {
             left.move(255);
             right.move(-255);

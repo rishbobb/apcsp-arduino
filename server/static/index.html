@@ -49,7 +49,7 @@
         $(".lefttext").text("LEFT");
         $(".left").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=left");
-        send("left");
+        send("l");
       } else if (e.which == 38) {
         $(".up").addClass("pressed");
         $(".uptext").text("UP");
@@ -57,19 +57,19 @@
         $(".down").css("transform", "translate(0, 2px)");
         $(".right").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=forward");
-        send("forward");
+        send("f");
       } else if (e.which == 39) {
         $(".right").addClass("pressed");
         $(".righttext").text("RIGHT");
         $(".right").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=right");
-        send("right");
+        send("r");
       } else if (e.which == 40) {
         $(".down").addClass("pressed");
         $(".downtext").text("DOWN");
         $(".down").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=backward");
-        send("backward");
+        send("b");
       } else if (e.which == 66) {
         $(".b").text("B");
       } else if (e.which == 65) {
@@ -115,7 +115,7 @@
       $(".lefttext").text("LEFT");
       $(".left").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=left");
-      send("left");
+      send("l");
     });
 
     $(".left").mouseup(function () {
@@ -129,7 +129,7 @@
       $(".righttext").text("RIGHT");
       $(".right").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=right");
-      send("right");
+      send("r");
     });
 
     $(".right").mouseup(function () {
@@ -145,7 +145,7 @@
       $(".down").css("transform", "translate(0, 2px)");
       $(".right").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=forward");
-      send("forward");
+      send("f");
     });
 
     $(".up").mouseup(function () {
@@ -161,7 +161,7 @@
       $(".downtext").text("DOWN");
       $(".down").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=backward");
-      send("backward");
+      send("b");
     });
 
     $(".down").mouseup(function () {
