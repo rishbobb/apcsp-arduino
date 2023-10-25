@@ -12,7 +12,7 @@ const port = 3000;
 const wss = new WebSocketServer({ port: 6969 });
 
 const arduino = new SerialPort({
-  path: "/dev/ttyUSB0",
+  path: "/dev/ttyACM0",
   baudRate: 1000000,
 });
 
