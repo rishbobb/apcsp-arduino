@@ -12,21 +12,6 @@
 // LED
 #define LED 13
 
-String getLineFromSerial()
-{
-    if (Serial.available() > 0)
-    {
-        String line = Serial.readStringUntil("\n");
-        line.remove(line.length() - 1);
-        Serial.println(line);
-        return line;
-    }
-    else
-    {
-        return "n";
-    }
-}
-
 // Motor class def (to make later code better with OOP)
 class Motor
 {
@@ -110,8 +95,10 @@ void setup()
 
 void loop()
 {
-    String line = getLineFromSerial();
-    if (!(line == "n")) {
+    if (Serial.available() > 0)
+    {
+        String line = Serial.readStringUntil("\n");
+        line.remove(line.length() - 1);
         digitalWrite(LED, HIGH);
         if (line == "f")
         {
@@ -133,11 +120,9 @@ void loop()
             left.move(255);
             right.move(-255);
         }
-        else if (line == "stop") {
+        else if (line == "s") {
             left.move(0);
             right.move(0);
         }
-    } else {
-        digitalWrite(LED, LOW);
     }
 }
