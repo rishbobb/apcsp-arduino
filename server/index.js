@@ -13,7 +13,7 @@ const wss = new WebSocketServer({ port: 6969 });
 
 const arduino = new SerialPort({
   path: "/dev/ttyACM0",
-  baudRate: 1000000,
+  baudRate: 2000000,
 });
 
 var lineReader = createInterface({

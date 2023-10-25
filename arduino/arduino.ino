@@ -1,7 +1,7 @@
 // - PORT DEFINITIONS -
 // Ultrasonic
-#define TRIG 3
-#define ECHO 2
+#define TRIG 52
+#define ECHO 50
 // Motor Controller
 #define AIN1 8
 #define AIN2 9
@@ -100,7 +100,7 @@ void setup()
     pinMode(LED, OUTPUT);
 
     // Serial
-    Serial.begin(1000000);
+    Serial.begin(2000000);
 
     while (!Serial)
     {
