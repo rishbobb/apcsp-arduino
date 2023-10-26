@@ -9,12 +9,21 @@
     <script src="jquery.min.js"></script>
   </head>
   <body class="noselect">
+    <div class="buttonWrapper">
+      <div class="button"></div>
+    </div>
     <div class="keys" class="noselect">
       <div class="up arr noselect"><i class="fa fa-arrow-up noselect"></i></div>
       <br />
-      <div class="left arr noselect"><i class="fa fa-arrow-left noselect"></i></div>
-      <div class="down arr noselect"><i class="fa fa-arrow-down noselect"></i></div>
-      <div class="right arr noselect"><i class="fa fa-arrow-right noselect"></i></div>
+      <div class="left arr noselect">
+        <i class="fa fa-arrow-left noselect"></i>
+      </div>
+      <div class="down arr noselect">
+        <i class="fa fa-arrow-down noselect"></i>
+      </div>
+      <div class="right arr noselect">
+        <i class="fa fa-arrow-right noselect"></i>
+      </div>
     </div>
     <br />
     <br />
@@ -36,13 +45,21 @@
   </body>
 
   <script>
-    var url =  window.location.host.split(":")[0];
+    var url = window.location.host.split(":")[0];
     const ws = new WebSocket(`ws://${url}:6969`);
     function send(data) {
       if (ws.readyState === 1) {
         ws.send(data);
       }
     }
+
+    var buttonWrapper = $(".buttonWrapper");
+    buttonWrapper.mousedown(() => {
+      send("5");
+    });
+    buttonWrapper.mouseup(() => {
+      send("6");
+    });
     $(document).keydown(function (e) {
       if (e.which == 37) {
         $(".left").addClass("pressed");
@@ -440,5 +457,62 @@
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+  }
+</style>
+
+<style>
+  //bourbon
+  @import "bourbon";
+
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    background: #1a3847;
+    text-align: center;
+  }
+
+  .buttonWrapper {
+    display: inline-block;
+    width: 460px;
+    height: 565px;
+    border-radius: 280px;
+
+    .button {
+      position: absolute;
+      top: calc(50% - 160px);
+      left: calc(50% - 220px);
+      width: 440px;
+      height: 355px;
+      border-radius: 50%;
+      background: #b3b3b3;
+      box-shadow: 0 10px 0 #888888, 0 20px 0 #888888, 0 30px 0 #888888,
+        10px 40px 0 hsla(0, 0%, 0%, 0.2);
+      cursor: pointer;
+
+      &:before {
+        position: absolute;
+        top: -95px;
+        left: 40px;
+        width: 360px;
+        height: 305px;
+        border-radius: inherit;
+        color: #ff0017;
+        background-color: #ff0017;
+        box-shadow: 0 30px 0 #df0014, 0 60px 0 #df0014, 0 90px 0 #df0014,
+          0 110px 0 #df0014, 25px 140px 0 hsla(0, 0%, 0%, 0.1);
+        content: "";
+        @include transition(all 100ms);
+      }
+
+      &:active:before {
+        top: 0px;
+        box-shadow: 0 16px #df0014, 0 16px #df0014, 0 16px #df0014,
+          0 16px #df0014, 5px 20px 0 hsla(0, 0%, 0%, 0.1);
+      }
+    }
   }
 </style>

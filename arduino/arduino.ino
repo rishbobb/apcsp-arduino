@@ -11,6 +11,8 @@
 #define PWMB 6
 // LED
 #define LED 13
+// Horn
+#define HORN 43
 
 // Motor class def (to make later code better with OOP)
 class Motor
@@ -124,9 +126,18 @@ void loop()
             left.move(255);
             right.move(-255);
         }
-        else if (num == 52) {
+        else if (num == 52)
+        {
             left.move(0);
             right.move(0);
+        }
+        else if (num == 53)
+        {
+            digitalWrite(HORN, HIGH);
+        }
+        else if (num == 54)
+        {
+            digitalWrite(HORN, LOW);
         }
     }
 }
