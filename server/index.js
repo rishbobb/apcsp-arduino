@@ -27,7 +27,8 @@ lineReader.on("line", function (line) {
 wss.on("connection", (ws) => {
   ws.on("message", (data) => {
     console.log(`Got direction ${data} from ws`);
-    arduino.write(`${data}\n`);
+    // arduino.write(`${data}\n`);
+    arduino.write(parseInt(data));
   });
 });
 
@@ -59,7 +60,8 @@ app.get("/flash", (req, res) => {
 
 app.get("/direction", (req, res) => {
   console.log(`Got direction ${req.query.direction}`);
-  arduino.write(`${req.query.direction}\n`);
+  // arduino.write(`${req.query.direction}\n`);
+  arduino.write(parseInt(req.query.direction));
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify({ success: true, direction: req.query.direction }));
 });

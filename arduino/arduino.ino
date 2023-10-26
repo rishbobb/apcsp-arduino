@@ -97,30 +97,34 @@ void loop()
 {
     if (Serial.available() > 0)
     {
-        String line = Serial.readStringUntil("\n");
-        line.remove(line.length() - 1);
+        int num = Serial.read();
+        Serial.println(num);
         digitalWrite(LED, HIGH);
-        if (line == "f")
+        if (num == 48)
         {
+            // forward
             left.move(255);
             right.move(255);
         }
-        else if (line == "b")
+        else if (num == 49)
         {
+            // backward
             left.move(-255);
             right.move(-255);
         }
-        else if (line == "l")
+        else if (num == 50)
         {
+            // left
             left.move(-255);
             right.move(255);
         }
-        else if (line == "r")
+        else if (num == 51)
         {
+            // right
             left.move(255);
             right.move(-255);
         }
-        else if (line == "s") {
+        else if (num == 52) {
             left.move(0);
             right.move(0);
         }

@@ -49,7 +49,7 @@
         $(".lefttext").text("LEFT");
         $(".left").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=left");
-        send("l");
+        send("2");
       } else if (e.which == 38) {
         $(".up").addClass("pressed");
         $(".uptext").text("UP");
@@ -57,19 +57,19 @@
         $(".down").css("transform", "translate(0, 2px)");
         $(".right").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=forward");
-        send("f");
+        send("0");
       } else if (e.which == 39) {
         $(".right").addClass("pressed");
         $(".righttext").text("RIGHT");
         $(".right").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=right");
-        send("r");
+        send("3");
       } else if (e.which == 40) {
         $(".down").addClass("pressed");
         $(".downtext").text("DOWN");
         $(".down").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=backward");
-        send("b");
+        send("1");
       } else if (e.which == 66) {
         $(".b").text("B");
       } else if (e.which == 65) {
@@ -83,7 +83,7 @@
         $(".lefttext").text("");
         $(".left").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("s");
+        send("4");
       } else if (e.which == 38) {
         $(".up").removeClass("pressed");
         $(".uptext").text("");
@@ -91,19 +91,19 @@
         $(".down").css("transform", "translate(0, 0)");
         $(".right").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("s");
+        send("4");
       } else if (e.which == 39) {
         $(".right").removeClass("pressed");
         $(".righttext").text("");
         $(".right").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("s");
+        send("4");
       } else if (e.which == 40) {
         $(".down").removeClass("pressed");
         $(".downtext").text("");
         $(".down").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("s");
+        send("4");
       } else if (e.which == 66) {
         $(".b").text("");
       } else if (e.which == 65) {
@@ -115,28 +115,28 @@
       $(".lefttext").text("LEFT");
       $(".left").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=left");
-      send("l");
+      send("2");
     });
 
     $(".left").mouseup(function () {
       $(".lefttext").text("");
       $(".left").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("s");
+      send("4");
     });
 
     $(".right").mousedown(function () {
       $(".righttext").text("RIGHT");
       $(".right").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=right");
-      send("r");
+      send("3");
     });
 
     $(".right").mouseup(function () {
       $(".righttext").text("");
       $(".right").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("s");
+      send("4");
     });
 
     $(".up").mousedown(function () {
@@ -145,7 +145,7 @@
       $(".down").css("transform", "translate(0, 2px)");
       $(".right").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=forward");
-      send("f");
+      send("0");
     });
 
     $(".up").mouseup(function () {
@@ -154,21 +154,21 @@
       $(".down").css("transform", "translate(0, 0)");
       $(".right").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("s");
+      send("4");
     });
 
     $(".down").mousedown(function () {
       $(".downtext").text("DOWN");
       $(".down").css("transform", "translate(0, 2px)");
       // fetch("/direction?direction=backward");
-      send("b");
+      send("1");
     });
 
     $(".down").mouseup(function () {
       $(".downtext").text("");
       $(".down").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("s");
+      send("4");
     });
 
     /*
