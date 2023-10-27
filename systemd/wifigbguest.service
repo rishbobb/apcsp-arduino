@@ -1,0 +1,11 @@
+[Unit]
+Description=nmcli wifi connect gbhsguest
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/nmcli device wifi connect Gbhs-Guest ifname wlan0
+User=root
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

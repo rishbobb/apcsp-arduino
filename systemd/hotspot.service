@@ -1,0 +1,11 @@
+[Unit]
+Description=nmcli hotspot
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/nmcli device wifi hotspot ifname wlan1 ssid rr-rpiserv password rr123lmngdj192
+User=root
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
