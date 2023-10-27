@@ -1,7 +1,12 @@
+#include "bot.hpp"
+#include "ultrasonic.hpp"
+#include "device.hpp"
+#include "rpic.hpp"
+
 // - PORT DEFINITIONS -
 // Ultrasonic
-#define TRIG 52
 #define ECHO 50
+#define TRIG 52
 // Motor Controller
 #define AIN1 8
 #define AIN2 9
@@ -14,130 +19,49 @@
 // Horn
 #define HORN 43
 
-// Motor class def (to make later code better with OOP)
-class Motor
-{
-public:
-    // port vals
-    int a, b, pwm;
-
-    // constructor
-    Motor(int a, int b, int pwm)
-    {
-        (*this).a = a;
-        (*this).b = b;
-        (*this).pwm = pwm;
-    }
-
-    // move function
-    void move(int speed)
-    {
-        if (speed > 0)
-        {
-            digitalWrite((*this).a, HIGH);
-            digitalWrite((*this).b, LOW);
-        }
-        else if (speed < 0)
-        {
-            digitalWrite((*this).a, LOW);
-            digitalWrite((*this).b, HIGH);
-        }
-        else
-        {
-            digitalWrite((*this).a, LOW);
-            digitalWrite((*this).b, LOW);
-        }
-
-        analogWrite((*this).pwm, abs(speed));
-    }
-};
-
-// get distance from ultrasonic
-float getDistance()
-{
-    digitalWrite(TRIG, LOW);
-    delayMicroseconds(2);
-    digitalWrite(TRIG, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIG, LOW);
-    float duration = pulseIn(ECHO, HIGH);
-    float distance = duration * 0.034 / 2;
-    return distance;
-}
-
-// left and right motors (using class i made)
-Motor left(AIN1, AIN2, PWMA);
-Motor right(BIN1, BIN2, PWMB);
+Bot bot(AIN1, AIN2, PWMA, BIN1, BIN2, PWMB);
+Ultrasonic front(ECHO, TRIG);
+Device led(LED);
+Device horn(HORN);
+RPIC rpi(2000000);
 
 void setup()
 {
     // Ultrasonic
-    pinMode(TRIG, OUTPUT);
-    pinMode(ECHO, INPUT);
+    front.setup();
 
     // Motor Controller
-    pinMode(AIN1, OUTPUT);
-    pinMode(AIN2, OUTPUT);
-    pinMode(PWMA, OUTPUT);
-    pinMode(BIN1, OUTPUT);
-    pinMode(BIN2, OUTPUT);
-    pinMode(PWMB, OUTPUT);
+    bot.setup();
 
     // LED
-    pinMode(LED, OUTPUT);
+    led.setup();
 
-    // Serial
+    // Horn
+    horn.setup();
+
+    // rpic connection
     Serial.begin(2000000);
 
     while (!Serial)
     {
-        ; // wait for serial
+        ;
     }
 }
 
 void loop()
 {
-    if (Serial.available() > 0)
+    if (rpi.available())
     {
-        int num = Serial.read();
-        Serial.println(num);
-        digitalWrite(LED, HIGH);
-        if (num == 48)
+        led.trigger(HIGH);
+        RPICMessage message = rpi.getMessage();
+        bot.move(message, 255);
+        if (message == horn_on)
         {
-            // forward
-            left.move(255);
-            right.move(255);
+            horn.trigger(HIGH);
         }
-        else if (num == 49)
+        else if (message == horn_off)
         {
-            // backward
-            left.move(-255);
-            right.move(-255);
-        }
-        else if (num == 50)
-        {
-            // left
-            left.move(-255);
-            right.move(255);
-        }
-        else if (num == 51)
-        {
-            // right
-            left.move(255);
-            right.move(-255);
-        }
-        else if (num == 52)
-        {
-            left.move(0);
-            right.move(0);
-        }
-        else if (num == 53)
-        {
-            digitalWrite(HORN, HIGH);
-        }
-        else if (num == 54)
-        {
-            digitalWrite(HORN, LOW);
+            horn.trigger(LOW);
         }
     }
 }
