@@ -180,23 +180,26 @@
     rightinterval = "";
 
     $(".left-turn").mousedown(() => {
-      leftinterval = setInterval(() => {
-        send("6");
-        send("8");
-      }, 500);
+      if (leftinterval != "") {
+        clearInterval(leftinterval);
+        leftinterval = "";
+      } else {
+        leftinterval = setInterval(() => {
+          send("7");
+          send("9");
+        }, 500);
+      }
     });
     $(".right-turn").mousedown(() => {
-      rightinterval = setInterval(() => {
-        send("7");
-        send("9");
-      }, 500);
-    });
-
-    $(".left-turn").mouseup(() => {
-      clearInterval(leftinterval);
-    });
-    $(".right-turn").mouseup(() => {
-      clearInterval(rightinterval);
+      if (rightinterval != "") {
+        clearInterval(rightinterval);
+        rightinterval = "";
+      } else {
+        rightinterval = setInterval(() => {
+          send("6");
+          send("8");
+        }, 500);
+      }
     });
 
     $(".horn").mousedown(() => {

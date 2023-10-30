@@ -8,7 +8,7 @@ Ultrasonic::Ultrasonic(int echo, int trig)
 
 void Ultrasonic::setup()
 {
-    pinMode((*this).echo, OUTPUT);
+    pinMode((*this).echo, INPUT);
     pinMode((*this).trig, OUTPUT);
 }
 
@@ -20,6 +20,6 @@ float Ultrasonic::getDistance()
     delayMicroseconds(10);
     digitalWrite((*this).trig, LOW);
     float duration = pulseIn((*this).echo, HIGH);
-    float distance = duration * 0.034 / 2;
+    float distance = duration * 0.0344 / 2;
     return distance;
 }

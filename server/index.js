@@ -10,6 +10,7 @@ dotenv.config();
 const app = express();
 const port = 3000;
 const wss = new WebSocketServer({ port: 6969 });
+let lines = [];
 
 const arduino = new SerialPort({
   path: "/dev/ttyACM0",
@@ -21,6 +22,7 @@ var lineReader = createInterface({
 });
 
 lineReader.on("line", function (line) {
+  lines.push(line);
   console.log(line);
 });
 
@@ -56,6 +58,27 @@ app.get("/flash", (req, res) => {
   execSync("../scripts/flash.sh");
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify({ success: true }));
+});
+
+app.get("/data", (req, res) => {
+  lines = [];
+  arduino.write("4");
+  let timeoutfunc = () => {
+    if (lines.length >= 3) {
+      res.setHeader("Content-Type", "application/json");
+      res.end(
+        JSON.stringify({
+          success: true,
+          front: lines[0],
+          back: lines[1],
+          sound: lines[2],
+        })
+      );
+    } else {
+      setTimeout(timeoutfunc, 500);
+    }
+  };
+  setTimeout(timeoutfunc, 500);
 });
 
 app.get("/direction", (req, res) => {

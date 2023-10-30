@@ -5,12 +5,12 @@
 
 // - PORT DEFINITIONS -
 // Ultrasonic
-#define ECHO_F 50
-#define TRIG_F 52
-#define ECHO_B 51
-#define TRIG_B 53
+#define ECHO_F 2
+#define TRIG_F 7
+#define ECHO_B 4
+#define TRIG_B 3
 // Sound
-#define SOUND 46
+#define SOUND A15
 // Motor Controller
 #define AIN1 8
 #define AIN2 9
@@ -54,7 +54,6 @@ void setup()
 
     // Horn
     horn.setup();
-    sound_detector.setup();
 
     // rpic connection
     Serial.begin(2000000);
@@ -68,21 +67,29 @@ void setup()
 int iter = 0;
 void loop()
 {
-    int sound_detected = sound_detector.isTriggered();
-    if (sound_detected)
+    float sound_detected = sound_detector.getAnalog();
+    if (sound_detected >= 25)
     {
         iter++;
     }
     else
     {
-        iter = 0;
+        if (iter > 0)
+        {
+            iter = 0;
+            horn.trigger(LOW);
+        }
     }
-    
+
     if (iter >= 50)
     {
         if (iter % 2 == 0)
         {
             horn.trigger(HIGH);
+        }
+        else
+        {
+            horn.trigger(LOW);
         }
     }
     if (rpi.available())
