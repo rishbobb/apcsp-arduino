@@ -10,7 +10,18 @@ enum RPICMessage {
     right = 51,
     stop = 52,
     horn_on = 53,
-    horn_off = 54
+    horn_off = 54,
+    get_sound = 97,
+    get_dist_front = 98,
+    get_dist_back = 99,
+    led_front_left_on = 100,
+    led_front_left_off = 101,
+    led_front_right_on = 102,
+    led_front_right_off = 103,
+    led_back_left_on = 104,
+    led_back_left_off = 105,
+    led_back_right_on = 106,
+    led_back_right_off = 107,
 };
 
 class RPIC {
