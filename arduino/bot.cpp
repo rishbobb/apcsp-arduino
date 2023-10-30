@@ -14,6 +14,13 @@ void Bot::setup()
 
 void Bot::move(RPICMessage direction, int speed)
 {
+    if (direction == (*this).cur)
+    {
+        (*this).leftw.move(0);
+        (*this).rightw.move(0);
+        (*this).cur = stopped;
+        return;
+    }
     switch (direction)
     {
     case forward:
@@ -32,9 +39,6 @@ void Bot::move(RPICMessage direction, int speed)
         (*this).leftw.move(speed);
         (*this).rightw.move(-speed);
         break;
-    case stop:
-        (*this).leftw.move(0);
-        (*this).rightw.move(0);
-        break;
     }
+    (*this).cur = direction;
 }

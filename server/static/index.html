@@ -58,7 +58,7 @@
       send("5");
     });
     buttonWrapper.mouseup(() => {
-      send("6");
+      send("5");
     });
     $(document).keydown(function (e) {
       if (e.which == 37) {
@@ -100,7 +100,7 @@
         $(".lefttext").text("");
         $(".left").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("4");
+        send("2");
       } else if (e.which == 38) {
         $(".up").removeClass("pressed");
         $(".uptext").text("");
@@ -108,19 +108,19 @@
         $(".down").css("transform", "translate(0, 0)");
         $(".right").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("4");
+        send("0");
       } else if (e.which == 39) {
         $(".right").removeClass("pressed");
         $(".righttext").text("");
         $(".right").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("4");
+        send("3");
       } else if (e.which == 40) {
         $(".down").removeClass("pressed");
         $(".downtext").text("");
         $(".down").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
-        send("4");
+        send("1");
       } else if (e.which == 66) {
         $(".b").text("");
       } else if (e.which == 65) {
@@ -139,7 +139,7 @@
       $(".lefttext").text("");
       $(".left").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("4");
+      send("2");
     });
 
     $(".right").mousedown(function () {
@@ -153,7 +153,7 @@
       $(".righttext").text("");
       $(".right").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("4");
+      send("3");
     });
 
     $(".up").mousedown(function () {
@@ -171,7 +171,7 @@
       $(".down").css("transform", "translate(0, 0)");
       $(".right").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("4");
+      send("0");
     });
 
     $(".down").mousedown(function () {
@@ -185,7 +185,7 @@
       $(".downtext").text("");
       $(".down").css("transform", "translate(0, 0)");
       // fetch("/direction?direction=stop");
-      send("4");
+      send("1");
     });
 
     /*

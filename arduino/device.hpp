@@ -6,13 +6,17 @@
 class Device
 {
 public:
-    int port;
+    int port, state;
 
     Device(int port);
 
     void setup();
 
     void trigger(int val);
+
+    int getState();
+
+    void flip();
 };
 
 #endif

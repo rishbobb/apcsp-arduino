@@ -9,7 +9,7 @@
 #define TRIG_F 52
 #define ECHO_B 51
 #define TRIG_B 53
-//Sound
+// Sound
 #define SOUND 46
 // Motor Controller
 #define AIN1 8
@@ -18,7 +18,7 @@
 #define BIN1 11
 #define BIN2 12
 #define PWMB 6
-// LED     
+// LED
 #define LED_FRONT_LEFT 38
 #define LED_FRONT_RIGHT 39
 #define LED_BACK_LEFT 40
@@ -68,45 +68,29 @@ void loop()
     if (rpi.available())
     {
         RPICMessage message = rpi.getMessage();
-        Serial.println(message);
         bot.move(message, 255);
-        switch (message) {
-            case horn_on:
-                horn.trigger(HIGH);
-                break;
-            case horn_off:
-                horn.trigger(LOW);
-                break;
-            case led_front_left_on:
-                front_left_led.trigger(HIGH);
-                break;
-            case led_front_left_off:
-                front_left_led.trigger(LOW);
-                break;
-            case led_front_right_on:
-                front_right_led.trigger(HIGH);
-                break;
-            case led_front_right_off:
-                front_right_led.trigger(LOW);
-                break;
-            case led_back_left_on:
-                back_left_led.trigger(HIGH);
-                break;
-            case led_back_left_off:
-                back_left_led.trigger(LOW);
-                break;
-            case led_back_right_on:
-                back_right_led.trigger(HIGH);
-                break;
-            case led_back_right_off:
-                back_right_led.trigger(LOW);
-                break;
-            case get_alarm:
-                break;
-            case get_dist_front:
-                break;
-            case get_dist_back:
-                break;
+        switch (message)
+        {
+        case horn_flip:
+            horn.flip();
+            break;
+        case led_front_left_flip:
+            front_left_led.flip();
+            break;
+        case led_front_right_flip:
+            front_right_led.flip();
+            break;
+        case led_back_left_flip:
+            back_left_led.flip();
+            break;
+        case led_back_right_flip:
+            back_right_led.flip();
+            break;
+        case get_info:
+            Serial.println(front.getDistance());
+            Serial.println(back.getDistance());
+            Serial.println(digitalRead(SOUND));
+            break;
         }
     }
 }

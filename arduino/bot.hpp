@@ -11,6 +11,9 @@ public:
     // decleration of instance variables
     Motor leftw, rightw;
 
+    // Current movement
+    RPICMessage cur;
+
     // constructor decleration
     Bot(int ain1, int ain2, int pwma, int bin1, int bin2, int pwmb);
 
