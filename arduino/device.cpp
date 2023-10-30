@@ -33,3 +33,13 @@ void Device::flip()
         (*this).trigger(LOW);
     }
 }
+
+int Device::isTriggered()
+{
+    return digitalRead((*this).port);
+}
+
+float Device::getAnalog()
+{
+    return analogRead((*this).port);
+}

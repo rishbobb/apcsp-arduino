@@ -4,15 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AP CSP Web Client</title>
-    <!-- <link rel="stylesheet" href="style.css" /> -->
-    <!-- <script src="script.js"></script> -->
     <script src="jquery.min.js"></script>
   </head>
   <body class="noselect">
-    <div class="buttonWrapper">
-      <div class="button"></div>
-    </div>
-    <div class="keys" class="noselect">
+    <div class="keys noselect">
       <div class="up arr noselect"><i class="fa fa-arrow-up noselect"></i></div>
       <br />
       <div class="left arr noselect">
@@ -22,6 +17,19 @@
         <i class="fa fa-arrow-down noselect"></i>
       </div>
       <div class="right arr noselect">
+        <i class="fa fa-arrow-right noselect"></i>
+      </div>
+    </div>
+
+    <div class="keys-2 noselect">
+      <div class="horn arr noselect">
+        <i class="fa fa-arrow-up noselect"></i>
+      </div>
+      <br />
+      <div class="right-turn arr noselect">
+        <i class="fa fa-arrow-right noselect"></i>
+      </div>
+      <div class="left-turn arr noselect">
         <i class="fa fa-arrow-right noselect"></i>
       </div>
     </div>
@@ -37,11 +45,6 @@
       <div class="b noselect"></div>
       <div class="a noselect"></div>
     </div>
-
-    <!-- <link
-      href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
-      rel="stylesheet"
-    /> -->
   </body>
 
   <script>
@@ -53,13 +56,6 @@
       }
     }
 
-    var buttonWrapper = $(".buttonWrapper");
-    buttonWrapper.mousedown(() => {
-      send("5");
-    });
-    buttonWrapper.mouseup(() => {
-      send("5");
-    });
     $(document).keydown(function (e) {
       if (e.which == 37) {
         $(".left").addClass("pressed");
@@ -87,10 +83,6 @@
         $(".down").css("transform", "translate(0, 2px)");
         // fetch("/direction?direction=backward");
         send("1");
-      } else if (e.which == 66) {
-        $(".b").text("B");
-      } else if (e.which == 65) {
-        $(".a").text("A");
       }
     });
 
@@ -121,10 +113,6 @@
         $(".down").css("transform", "translate(0, 0)");
         // fetch("/direction?direction=stop");
         send("1");
-      } else if (e.which == 66) {
-        $(".b").text("");
-      } else if (e.which == 65) {
-        $(".a").text("");
       }
     });
 
@@ -188,191 +176,39 @@
       send("1");
     });
 
-    /*
-     * Konami-JS ~
-     * :: Now with support for touch events and multiple instances for
-     * :: those situations that call for multiple easter eggs!
-     * Code: https://konami-js.googlecode.com/
-     * Examples: http://www.snaptortoise.com/konami-js
-     * Copyright (c) 2009 George Mandis (georgemandis.com, snaptortoise.com)
-     * Version: 1.4.2 (9/2/2013)
-     * Licensed under the MIT License (https://opensource.org/licenses/MIT)
-     * Tested in: Safari 4+, Google Chrome 4+, Firefox 3+, IE7+, Mobile Safari 2.2.1 and Dolphin Browser
-     */
+    leftinterval = "";
+    rightinterval = "";
 
-    var Konami = function (callback) {
-      var konami = {
-        addEvent: function (obj, type, fn, ref_obj) {
-          if (obj.addEventListener) obj.addEventListener(type, fn, false);
-          else if (obj.attachEvent) {
-            // IE
-            obj["e" + type + fn] = fn;
-            obj[type + fn] = function () {
-              obj["e" + type + fn](window.event, ref_obj);
-            };
-            obj.attachEvent("on" + type, obj[type + fn]);
-          }
-        },
-        input: "",
-        pattern: "38384040373937396665",
-        load: function (link) {
-          this.addEvent(
-            document,
-            "keydown",
-            function (e, ref_obj) {
-              if (ref_obj) konami = ref_obj; // IE
-              konami.input += e ? e.keyCode : event.keyCode;
-              if (konami.input.length > konami.pattern.length)
-                konami.input = konami.input.substr(
-                  konami.input.length - konami.pattern.length
-                );
-              if (konami.input == konami.pattern) {
-                konami.code(link);
-                konami.input = "";
-                e.preventDefault();
-                return false;
-              }
-            },
-            this
-          );
-          this.iphone.load(link);
-        },
-        code: function (link) {
-          window.location = link;
-        },
-        iphone: {
-          start_x: 0,
-          start_y: 0,
-          stop_x: 0,
-          stop_y: 0,
-          tap: false,
-          capture: false,
-          orig_keys: "",
-          keys: [
-            "UP",
-            "UP",
-            "DOWN",
-            "DOWN",
-            "LEFT",
-            "RIGHT",
-            "LEFT",
-            "RIGHT",
-            "TAP",
-            "TAP",
-          ],
-          code: function (link) {
-            konami.code(link);
-          },
-          load: function (link) {
-            this.orig_keys = this.keys;
-            konami.addEvent(document, "touchmove", function (e) {
-              if (e.touches.length == 1 && konami.iphone.capture == true) {
-                var touch = e.touches[0];
-                konami.iphone.stop_x = touch.pageX;
-                konami.iphone.stop_y = touch.pageY;
-                konami.iphone.tap = false;
-                konami.iphone.capture = false;
-                konami.iphone.check_direction();
-              }
-            });
-            konami.addEvent(
-              document,
-              "touchend",
-              function (evt) {
-                if (konami.iphone.tap == true)
-                  konami.iphone.check_direction(link);
-              },
-              false
-            );
-            konami.addEvent(document, "touchstart", function (evt) {
-              konami.iphone.start_x = evt.changedTouches[0].pageX;
-              konami.iphone.start_y = evt.changedTouches[0].pageY;
-              konami.iphone.tap = true;
-              konami.iphone.capture = true;
-            });
-          },
-          check_direction: function (link) {
-            x_magnitude = Math.abs(this.start_x - this.stop_x);
-            y_magnitude = Math.abs(this.start_y - this.stop_y);
-            x = this.start_x - this.stop_x < 0 ? "RIGHT" : "LEFT";
-            y = this.start_y - this.stop_y < 0 ? "DOWN" : "UP";
-            result = x_magnitude > y_magnitude ? x : y;
-            result = this.tap == true ? "TAP" : result;
+    $(".left-turn").mousedown(() => {
+      leftinterval = setInterval(() => {
+        send("6");
+        send("8");
+      }, 500);
+    });
+    $(".right-turn").mousedown(() => {
+      rightinterval = setInterval(() => {
+        send("7");
+        send("9");
+      }, 500);
+    });
 
-            if (result == this.keys[0])
-              this.keys = this.keys.slice(1, this.keys.length);
-            if (this.keys.length == 0) {
-              this.keys = this.orig_keys;
-              this.code(link);
-            }
-          },
-        },
-      };
+    $(".left-turn").mouseup(() => {
+      clearInterval(leftinterval);
+    });
+    $(".right-turn").mouseup(() => {
+      clearInterval(rightinterval);
+    });
 
-      typeof callback === "string" && konami.load(callback);
-      if (typeof callback === "function") {
-        konami.code = callback;
-        konami.load();
-      }
-
-      return konami;
-    };
-
-    var easter_egg = new Konami();
-    easter_egg.code = function () {
-      alert("Colors mode activated (Press A when you close this)!");
-
-      $(".up").css("background", "orange");
-      $(".up").css("border-right", "10px solid #996300");
-      $(".up").css("border-bottom", "10px solid #996300");
-      $(".up").css("border-left", "10px solid #b37300");
-      $(".up").css("border-top", "10px solid #cc8400");
-      $(".uptext").css("color", "orange");
-      $(".uptext").css(
-        "text-shadow",
-        "0 0 10px orange, 0 0 10px orange, 0 0 10px orange, 0 0 10px orange"
-      );
-
-      $(".down").css("background", "tomato");
-      $(".down").css("border-right", "10px solid #e02200");
-      $(".down").css("border-bottom", "10px solid #e02200");
-      $(".down").css("border-left", "10px solid #f92600");
-      $(".down").css("border-top", "10px solid #ff3814");
-      $(".downtext").css("color", "tomato");
-      $(".downtext").css(
-        "text-shadow",
-        "0 0 10px tomato, 0 0 10px tomato, 0 0 10px tomato, 0 0 10px tomato"
-      );
-
-      $(".left").css("background", "skyblue");
-      $(".left").css("border-right", "10px solid #30aadc");
-      $(".left").css("border-bottom", "10px solid #30aadc");
-      $(".left").css("border-left", "10px solid #45b3e0");
-      $(".left").css("border-top", "10px solid #5bbce4");
-      $(".lefttext").css("color", "skyblue");
-      $(".lefttext").css(
-        "text-shadow",
-        "0 0 10px skyblue, 0 0 10px skyblue, 0 0 10px skyblue, 0 0 10px skyblue"
-      );
-
-      $(".right").css("background", "red");
-      $(".right").css("border-right", "10px solid #990000");
-      $(".right").css("border-bottom", "10px solid #990000");
-      $(".right").css("border-left", "10px solid #b30000");
-      $(".right").css("border-top", "10px solid #cc0000");
-      $(".righttext").css("color", "red");
-      $(".righttext").css(
-        "text-shadow",
-        "0 0 10px red, 0 0 10px red, 0 0 10px red, 0 0 10px red"
-      );
-    };
-    easter_egg.load();
+    $(".horn").mousedown(() => {
+      send("5");
+    });
+    $(".horn").mouseup(() => {
+      send("5");
+    });
   </script>
 </html>
 
 <style>
-  /* @import url(https://fonts.googleapis.com/css?family=Lato:300); */
-
   html {
     background: radial-gradient(#000, #111);
     height: 100%;
@@ -385,6 +221,15 @@
     height: 200px;
     margin: auto;
     margin-top: 200px;
+  }
+
+  .keys-2 {
+    font-family: "Lato", sans-serif;
+    text-align: center;
+    width: 350px;
+    height: 200px;
+    margin: auto;
+    margin-top: 150px;
   }
 
   .arr {
@@ -457,59 +302,5 @@
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
-  }
-</style>
-
-<style>
-  html,
-  body {
-    height: 100%;
-    overflow: hidden;
-  }
-
-  body {
-    background: #1a3847;
-    text-align: center;
-  }
-
-  .buttonWrapper {
-    display: inline-block;
-    width: 460px;
-    height: 565px;
-    border-radius: 280px;
-
-    .button {
-      position: absolute;
-      top: calc(50% - 160px);
-      left: calc(50% - 220px);
-      width: 440px;
-      height: 355px;
-      border-radius: 50%;
-      background: #b3b3b3;
-      box-shadow: 0 10px 0 #888888, 0 20px 0 #888888, 0 30px 0 #888888,
-        10px 40px 0 hsla(0, 0%, 0%, 0.2);
-      cursor: pointer;
-
-      &:before {
-        position: absolute;
-        top: -95px;
-        left: 40px;
-        width: 360px;
-        height: 305px;
-        border-radius: inherit;
-        color: #ff0017;
-        background-color: #ff0017;
-        box-shadow: 0 30px 0 #df0014, 0 60px 0 #df0014, 0 90px 0 #df0014,
-          0 110px 0 #df0014, 25px 140px 0 hsla(0, 0%, 0%, 0.1);
-        content: "";
-        @include transition(all 100ms);
-      }
-
-      &:active:before {
-        top: 0px;
-        box-shadow: 0 16px #df0014, 0 16px #df0014, 0 16px #df0014,
-          0 16px #df0014, 5px 20px 0 hsla(0, 0%, 0%, 0.1);
-      }
-    }
   }
 </style>

@@ -30,6 +30,7 @@ Bot bot(AIN1, AIN2, PWMA, BIN1, BIN2, PWMB);
 Ultrasonic front(ECHO_F, TRIG_F);
 Ultrasonic back(ECHO_B, TRIG_B);
 Device horn(HORN);
+Device sound_detector(SOUND);
 RPIC rpi(2000000);
 Device front_left_led(LED_FRONT_LEFT);
 Device front_right_led(LED_FRONT_RIGHT);
@@ -53,6 +54,7 @@ void setup()
 
     // Horn
     horn.setup();
+    sound_detector.setup();
 
     // rpic connection
     Serial.begin(2000000);
@@ -63,8 +65,26 @@ void setup()
     }
 }
 
+int iter = 0;
 void loop()
 {
+    int sound_detected = sound_detector.isTriggered();
+    if (sound_detected)
+    {
+        iter++;
+    }
+    else
+    {
+        iter = 0;
+    }
+    
+    if (iter >= 50)
+    {
+        if (iter % 2 == 0)
+        {
+            horn.trigger(HIGH);
+        }
+    }
     if (rpi.available())
     {
         RPICMessage message = rpi.getMessage();
@@ -89,7 +109,7 @@ void loop()
         case get_info:
             Serial.println(front.getDistance());
             Serial.println(back.getDistance());
-            Serial.println(digitalRead(SOUND));
+            Serial.println(sound_detected);
             break;
         }
     }

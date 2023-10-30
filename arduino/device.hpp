@@ -17,6 +17,10 @@ public:
     int getState();
 
     void flip();
+
+    int isTriggered();
+
+    float getAnalog();
 };
 
 #endif
