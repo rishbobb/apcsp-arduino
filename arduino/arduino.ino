@@ -68,7 +68,7 @@ int iter = 0;
 void loop()
 {
     float sound_detected = sound_detector.getAnalog();
-    if (sound_detected >= 25)
+    if (sound_detected >= 35)
     {
         iter++;
     }
