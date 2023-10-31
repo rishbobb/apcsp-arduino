@@ -3,15 +3,19 @@
 
 #include <Arduino.h>
 
-class Ultrasonic {
-    public:
-        int echo, trig;
+class Ultrasonic
+{
+public:
+    // instance vars
+    int echo, trig;
 
-        Ultrasonic(int echo, int trig);
+    // constructor decleration
+    Ultrasonic(int echo, int trig);
 
-        void setup();
+    // function declerations
+    void setup();
 
-        float getDistance();
+    float getDistance();
 };
 
 #endif

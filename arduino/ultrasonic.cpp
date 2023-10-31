@@ -1,17 +1,20 @@
 #include "ultrasonic.hpp"
 
+// ultrasonic constructor definition
 Ultrasonic::Ultrasonic(int echo, int trig)
 {
     (*this).echo = echo;
     (*this).trig = trig;
 }
 
+// setup pins
 void Ultrasonic::setup()
 {
     pinMode((*this).echo, INPUT);
     pinMode((*this).trig, OUTPUT);
 }
 
+// get distance function using the formula
 float Ultrasonic::getDistance()
 {
     digitalWrite((*this).trig, LOW);

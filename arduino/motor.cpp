@@ -26,21 +26,25 @@ void Motor::setup()
 // Motor move function definition
 void Motor::move(int speed)
 {
+    // if going in positive dir, a HIGH b LOW
     if (speed > 0)
     {
         digitalWrite((*this).a, HIGH);
         digitalWrite((*this).b, LOW);
     }
+    // going in negative dir, a LOW b HIGH
     else if (speed < 0)
     {
         digitalWrite((*this).a, LOW);
         digitalWrite((*this).b, HIGH);
     }
+    // if not moving, both LOW
     else
     {
         digitalWrite((*this).a, LOW);
         digitalWrite((*this).b, LOW);
     }
 
+    // set speed value in PWM port
     analogWrite((*this).pwm, abs(speed));
 }
