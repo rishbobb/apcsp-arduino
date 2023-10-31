@@ -7,6 +7,8 @@
     <script src="jquery.min.js"></script>
   </head>
   <body class="noselect">
+    <h1 class="infotext"></h1>
+
     <div class="keys noselect">
       <div class="up arr noselect"><i class="fa fa-arrow-up noselect"></i></div>
       <br />
@@ -48,6 +50,13 @@
   </body>
 
   <script>
+    setInterval(async () => {
+      let data = await (await fetch("/data")).json();
+      $("h1").text(
+        `front: ${data.front} | back: ${data.back} | sound ${data.sound}`
+      );
+    }, 500);
+
     var url = window.location.host.split(":")[0];
     const ws = new WebSocket(`ws://${url}:6969`);
     function send(data) {
@@ -215,6 +224,18 @@
   html {
     background: radial-gradient(#000, #111);
     height: 100%;
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .infotext {
+    position: absolute;
+    font-family: "Lato", sans-serif;
+    text-align: center;
+    color: white;
+    top: 10px;
+    width: 100%;
   }
 
   .keys {

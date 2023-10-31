@@ -64,42 +64,28 @@ void setup()
     }
 }
 
-int iter = 0;
+int alarm_timeout = 0;
+bool alarm = false;
+int user_horn = LOW;
 void loop()
 {
     float sound_detected = sound_detector.getAnalog();
-    if (sound_detected >= 35)
+
+    if (sound_detected >= 600 && alarm_timeout >= 1000)
     {
-        iter++;
-    }
-    else
-    {
-        if (iter > 0)
-        {
-            iter = 0;
-            horn.trigger(LOW);
-        }
+        alarm = true;
     }
 
-    if (iter >= 50)
-    {
-        if (iter % 2 == 0)
-        {
-            horn.trigger(HIGH);
-        }
-        else
-        {
-            horn.trigger(LOW);
-        }
-    }
     if (rpi.available())
     {
+        alarm_timeout = 0;
         RPICMessage message = rpi.getMessage();
         bot.move(message, 255);
         switch (message)
         {
         case horn_flip:
             horn.flip();
+            user_horn = !user_horn;
             break;
         case led_front_left_flip:
             front_left_led.flip();
@@ -118,6 +104,22 @@ void loop()
             Serial.println(back.getDistance());
             Serial.println(sound_detected);
             break;
+        }
+    }
+    else
+    {
+        alarm_timeout++;
+    }
+
+    if (alarm && alarm_timeout >= 1000)
+    {
+        horn.trigger(HIGH);
+    }
+    else
+    {
+        if (user_horn != horn.getState())
+        {
+            horn.trigger(user_horn);
         }
     }
 }
