@@ -4,201 +4,119 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AP CSP Web Client</title>
+    <!-- load jquery -->
     <script src="jquery.min.js"></script>
   </head>
-  <body class="noselect">
+
+  <body>
+    <!-- data display text -->
     <h1 class="infotext"></h1>
 
-    <div class="keys noselect">
-      <div class="up arr noselect"><i class="fa fa-arrow-up noselect"></i></div>
+    <!-- driving buttons -->
+    <div class="keys">
+      <div class="up arr"></div>
       <br />
-      <div class="left arr noselect">
-        <i class="fa fa-arrow-left noselect"></i>
-      </div>
-      <div class="down arr noselect">
-        <i class="fa fa-arrow-down noselect"></i>
-      </div>
-      <div class="right arr noselect">
-        <i class="fa fa-arrow-right noselect"></i>
-      </div>
+      <div class="left arr"></div>
+      <div class="down arr"></div>
+      <div class="right arr"></div>
     </div>
 
-    <div class="keys-2 noselect">
-      <div class="horn arr noselect">
-        <i class="fa fa-arrow-up noselect"></i>
-      </div>
+    <!-- turn signals and horn -->
+    <div class="keys-2">
+      <div class="horn arr"></div>
       <br />
-      <div class="right-turn arr noselect">
-        <i class="fa fa-arrow-right noselect"></i>
-      </div>
-      <div class="left-turn arr noselect">
-        <i class="fa fa-arrow-right noselect"></i>
-      </div>
-    </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <div class="names noselect">
-      <div class="uptext noselect"></div>
-      <div class="downtext noselect"></div>
-      <div class="lefttext noselect"></div>
-      <div class="righttext noselect"></div>
-      <div class="b noselect"></div>
-      <div class="a noselect"></div>
+      <div class="right-turn arr"></div>
+      <div class="left-turn arr"></div>
     </div>
   </body>
 
   <script>
+    // Get data and display it every 500ms
     setInterval(async () => {
+      // fetch data from /data endpoint on expressjs server
       let data = await (await fetch("/data")).json();
+      // display in h1
       $("h1").text(
         `front: ${data.front} | back: ${data.back} | sound ${data.sound}`
       );
     }, 500);
 
+    // Get websocket url and connect to websocket
     var url = window.location.host.split(":")[0];
     const ws = new WebSocket(`ws://${url}:6969`);
+
+    // ws send function to avoid unopened errors
     function send(data) {
       if (ws.readyState === 1) {
         ws.send(data);
       }
     }
 
-    $(document).keydown(function (e) {
-      if (e.which == 37) {
-        $(".left").addClass("pressed");
-        $(".lefttext").text("LEFT");
-        $(".left").css("transform", "translate(0, 2px)");
-        // fetch("/direction?direction=left");
-        send("2");
-      } else if (e.which == 38) {
-        $(".up").addClass("pressed");
-        $(".uptext").text("UP");
-        $(".left").css("transform", "translate(0, 2px)");
-        $(".down").css("transform", "translate(0, 2px)");
-        $(".right").css("transform", "translate(0, 2px)");
-        // fetch("/direction?direction=forward");
-        send("0");
-      } else if (e.which == 39) {
-        $(".right").addClass("pressed");
-        $(".righttext").text("RIGHT");
-        $(".right").css("transform", "translate(0, 2px)");
-        // fetch("/direction?direction=right");
-        send("3");
-      } else if (e.which == 40) {
-        $(".down").addClass("pressed");
-        $(".downtext").text("DOWN");
-        $(".down").css("transform", "translate(0, 2px)");
-        // fetch("/direction?direction=backward");
-        send("1");
-      }
-    });
-
-    $(document).keyup(function (e) {
-      if (e.which == 37) {
-        $(".left").removeClass("pressed");
-        $(".lefttext").text("");
-        $(".left").css("transform", "translate(0, 0)");
-        // fetch("/direction?direction=stop");
-        send("2");
-      } else if (e.which == 38) {
-        $(".up").removeClass("pressed");
-        $(".uptext").text("");
-        $(".left").css("transform", "translate(0, 0)");
-        $(".down").css("transform", "translate(0, 0)");
-        $(".right").css("transform", "translate(0, 0)");
-        // fetch("/direction?direction=stop");
-        send("0");
-      } else if (e.which == 39) {
-        $(".right").removeClass("pressed");
-        $(".righttext").text("");
-        $(".right").css("transform", "translate(0, 0)");
-        // fetch("/direction?direction=stop");
-        send("3");
-      } else if (e.which == 40) {
-        $(".down").removeClass("pressed");
-        $(".downtext").text("");
-        $(".down").css("transform", "translate(0, 0)");
-        // fetch("/direction?direction=stop");
-        send("1");
-      }
-    });
-
-    $(".left").mousedown(function () {
-      $(".lefttext").text("LEFT");
+    // mousedown and mouseup functions for all buttons (only first one is commented)
+    $(".left").mousedown(() => {
+      // css transform
       $(".left").css("transform", "translate(0, 2px)");
-      // fetch("/direction?direction=left");
+      // send correlated command (2 is left, command list can be found in cpp code in rpic.hpp)
       send("2");
     });
 
-    $(".left").mouseup(function () {
-      $(".lefttext").text("");
+    $(".left").mouseup(() => {
       $(".left").css("transform", "translate(0, 0)");
-      // fetch("/direction?direction=stop");
       send("2");
     });
 
-    $(".right").mousedown(function () {
-      $(".righttext").text("RIGHT");
+    $(".right").mousedown(() => {
       $(".right").css("transform", "translate(0, 2px)");
-      // fetch("/direction?direction=right");
       send("3");
     });
 
-    $(".right").mouseup(function () {
-      $(".righttext").text("");
+    $(".right").mouseup(() => {
       $(".right").css("transform", "translate(0, 0)");
-      // fetch("/direction?direction=stop");
       send("3");
     });
 
-    $(".up").mousedown(function () {
-      $(".uptext").text("UP");
+    $(".up").mousedown(() => {
       $(".left").css("transform", "translate(0, 2px)");
       $(".down").css("transform", "translate(0, 2px)");
       $(".right").css("transform", "translate(0, 2px)");
-      // fetch("/direction?direction=forward");
       send("0");
     });
 
-    $(".up").mouseup(function () {
-      $(".uptext").text("");
+    $(".up").mouseup(() => {
       $(".left").css("transform", "translate(0, 0)");
       $(".down").css("transform", "translate(0, 0)");
       $(".right").css("transform", "translate(0, 0)");
-      // fetch("/direction?direction=stop");
       send("0");
     });
 
-    $(".down").mousedown(function () {
-      $(".downtext").text("DOWN");
+    $(".down").mousedown(() => {
       $(".down").css("transform", "translate(0, 2px)");
-      // fetch("/direction?direction=backward");
       send("1");
     });
 
-    $(".down").mouseup(function () {
-      $(".downtext").text("");
+    $(".down").mouseup(() => {
       $(".down").css("transform", "translate(0, 0)");
-      // fetch("/direction?direction=stop");
       send("1");
     });
 
+    // turn signals need to blink, done using setInterval
     leftinterval = "";
     rightinterval = "";
 
     $(".left-turn").mousedown(() => {
+      // if interval is alr set (turn signal is on), clear it (turn it off)
       if (leftinterval != "") {
         clearInterval(leftinterval);
         leftinterval = "";
       } else {
+        // otherwise, turn it on (set the interval func)
         leftinterval = setInterval(() => {
           send("7");
           send("9");
         }, 500);
       }
     });
+
     $(".right-turn").mousedown(() => {
       if (rightinterval != "") {
         clearInterval(rightinterval);
@@ -211,6 +129,7 @@
       }
     });
 
+    // horn
     $(".horn").mousedown(() => {
       send("5");
     });
@@ -218,113 +137,78 @@
       send("5");
     });
   </script>
-</html>
 
-<style>
-  html {
-    background: radial-gradient(#000, #111);
-    height: 100%;
-    margin: 0;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .infotext {
-    position: absolute;
-    font-family: "Lato", sans-serif;
-    text-align: center;
-    color: white;
-    top: 10px;
-    width: 100%;
-  }
-
-  .keys {
-    font-family: "Lato", sans-serif;
-    text-align: center;
-    width: 350px;
-    height: 200px;
-    margin: auto;
-    margin-top: 200px;
-  }
-
-  .keys-2 {
-    font-family: "Lato", sans-serif;
-    text-align: center;
-    width: 350px;
-    height: 200px;
-    margin: auto;
-    margin-top: 150px;
-  }
-
-  .arr {
-    cursor: pointer;
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    line-height: 100px;
-    background: grey;
-    color: white;
-    font-size: 50px;
-    border-right: 10px solid darken(grey, 20);
-    border-bottom: 10px solid darken(grey, 20);
-    border-left: 10px solid darken(grey, 15);
-    border-top: 10px solid darken(grey, 10);
-    display: inline-block;
-    margin: 5px;
-    transition: all 0.05s linear;
-    &:active {
-      border-bottom: 8px solid darken(grey, 20);
-      text-shadow: 0 0 10px white, 0 0 10px white, 0 0 20px white;
-      transform: translate(0, 2px);
+  <!-- css styling -->
+  <style>
+    html {
+      background: black;
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
     }
-    user-select: none;
-  }
 
-  .up {
-    position: relative;
-    top: -4px;
-  }
+    .infotext {
+      position: absolute;
+      font-family: "Lato", sans-serif;
+      text-align: center;
+      color: white;
+      top: 10px;
+      width: 100%;
+    }
 
-  .pressed {
-    border-bottom: 8px solid darken(grey, 20);
-    text-shadow: 0 0 10px white;
-    transform: translate(0, 2px);
-  }
+    .keys {
+      margin: auto;
+      margin-top: 200px;
+      font-family: "Lato", sans-serif;
+      text-align: center;
+      width: 350px;
+      height: 200px;
+    }
 
-  .names {
-    font-size: 18px;
-    font-family: "Lato", sans-serif;
-    text-align: center;
-    color: white;
-    text-shadow: 0 0 10px white, 0 0 10px white, 0 0 10px white, 0 0 10px white;
-  }
+    .keys-2 {
+      margin: auto;
+      margin-top: 150px;
+      font-family: "Lato", sans-serif;
+      text-align: center;
+      width: 350px;
+      height: 200px;
+    }
 
-  .b {
-    color: blue;
-    text-shadow: 0 0 10px blue, 0 0 10px blue, 0 0 10px blue, 0 0 10px blue;
-    font-size: 100px;
-    font-family: serif;
-  }
+    .arr {
+      display: inline-block;
+      margin: 5px;
+      cursor: pointer;
+      width: 100px;
+      height: 100px;
+      text-align: center;
+      line-height: 100px;
+      background: grey;
+      transition: all 0.05s linear;
+      &:active {
+        transform: translate(0, 2px);
+        border-bottom: 8px solid darken(grey, 20);
+        text-shadow: 0 0 10px white, 0 0 10px white, 0 0 20px white;
+      }
+    }
 
-  .a {
-    color: yellow;
-    text-shadow: 0 0 10px yellow, 0 0 10px yellow, 0 0 10px yellow,
-      0 0 10px yellow;
-    font-size: 100px;
-    font-family: serif;
-  }
-  .prevent-select {
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
-  }
-  .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
-  }
-</style>
+    .up {
+      top: -4px;
+      position: relative;
+    }
+
+    .pressed {
+      text-shadow: 0 0 10px white;
+      transform: translate(0, 2px);
+      border-bottom: 8px solid darken(grey, 20);
+    }
+
+    .names {
+      color: white;
+      text-shadow: 0 0 10px white, 0 0 10px white, 0 0 10px white,
+        0 0 10px white;
+      font-size: 18px;
+      font-family: "Lato", sans-serif;
+      text-align: center;
+    }
+  </style>
+</html>
