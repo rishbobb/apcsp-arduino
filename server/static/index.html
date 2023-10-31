@@ -31,14 +31,18 @@
   </body>
 
   <script>
+    // if any button is pressed, DO NOT fetch data from bot
+    let pressed = false;
     // Get data and display it every 500ms
     setInterval(async () => {
-      // fetch data from /data endpoint on expressjs server
-      let data = await (await fetch("/data")).json();
-      // display in h1
-      $("h1").text(
-        `front: ${data.front} | back: ${data.back} | sound ${data.sound}`
-      );
+      if (!pressed) {
+        // fetch data from /data endpoint on expressjs server
+        let data = await (await fetch("/data")).json();
+        // display in h1
+        $("h1").text(
+          `front: ${data.front} | back: ${data.back} | sound ${data.sound}`
+        );
+      }
     }, 500);
 
     // Get websocket url and connect to websocket
@@ -54,6 +58,7 @@
 
     // mousedown and mouseup functions for all buttons (only first one is commented)
     $(".left").mousedown(() => {
+      pressed = true;
       // css transform
       $(".left").css("transform", "translate(0, 2px)");
       // send correlated command (2 is left, command list can be found in cpp code in rpic.hpp)
@@ -63,9 +68,11 @@
     $(".left").mouseup(() => {
       $(".left").css("transform", "translate(0, 0)");
       send("2");
+      pressed = false;
     });
 
     $(".right").mousedown(() => {
+      pressed = true;
       $(".right").css("transform", "translate(0, 2px)");
       send("3");
     });
@@ -73,9 +80,11 @@
     $(".right").mouseup(() => {
       $(".right").css("transform", "translate(0, 0)");
       send("3");
+      pressed = false;
     });
 
     $(".up").mousedown(() => {
+      pressed = true;
       $(".left").css("transform", "translate(0, 2px)");
       $(".down").css("transform", "translate(0, 2px)");
       $(".right").css("transform", "translate(0, 2px)");
@@ -87,9 +96,11 @@
       $(".down").css("transform", "translate(0, 0)");
       $(".right").css("transform", "translate(0, 0)");
       send("0");
+      pressed = false;
     });
 
     $(".down").mousedown(() => {
+      pressed = true;
       $(".down").css("transform", "translate(0, 2px)");
       send("1");
     });
@@ -97,6 +108,7 @@
     $(".down").mouseup(() => {
       $(".down").css("transform", "translate(0, 0)");
       send("1");
+      pressed = false;
     });
 
     // turn signals need to blink, done using setInterval
